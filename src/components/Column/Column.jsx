@@ -10,7 +10,7 @@ const Column = ({ column, tasks, state, setState }) => {
   const [inputText, setInputText] = React.useState("");
   const [editHide, setEditHide] = React.useState(0);
   const [editText, setEditText] = React.useState("");
-  const [newItemIndex, setNewItemIndex] = React.useState(4)
+  const [newItemIndex, setNewItemIndex] = React.useState(4);
 
   //ON CLICK OPEN BUTTON OPENS INPUT WITH FOCUS
   React.useEffect(() => {
@@ -26,42 +26,48 @@ const Column = ({ column, tasks, state, setState }) => {
   };
   const onClickAddButton = () => {
     if (inputText === "") {
-      
-      return
+      return;
     } else {
       setInputHide(!inputHide);
       //ADDING NEW TASK
-      tasks.push({id: newItemIndex - 1, content: inputText})
+      // tasks.push({id: newItemIndex, content: inputText})
       setNewItemIndex(newItemIndex + 1)
-      column.taskIds.push(newItemIndex - 1)
-      console.log(column.taskIds)
-      setInputText('')
-      // setState({
-      //   ...state
-      // })
+      // column.taskIds.push(newItemIndex - 1)
+      setInputText("");
+      const newState = {
+        ...state,
+        tasks: {
+          ...state.tasks,
+          [newItemIndex]: {id: newItemIndex, content: inputText}
+        },
+      }
+      setState(newState)
+      console.log(state.tasks);
+      column.taskIds.push(4)
+      console.log(column.taskIds);
     }
   };
 
   const onCLickEdit = (id, index) => {
-    setEditHide(prev => !prev)
-    setEditHide(index + 1)
-    setEditText(id.content)
+    setEditHide((prev) => !prev);
+    setEditHide(index + 1);
+    setEditText(id.content);
   };
 
   const onCLickEditClose = () => {
-    setEditHide(0)
-    setEditText('')
+    setEditHide(0);
+    setEditText("");
   };
 
   const onClickEditSave = (id) => {
-    id.content = editText
-    setEditHide(prev => !prev)
-    setEditText('')
-  }
+    id.content = editText;
+    setEditHide((prev) => !prev);
+    setEditText("");
+  };
 
-  const onClickDelete = (id, index) => {    
-    console.log(column.taskIds.splice(index, 1))
-    setState({...state})
+  const onClickDelete = (id, index) => {
+    console.log(column.taskIds.splice(index, 1));
+    setState({ ...state });
   };
 
   return (
@@ -87,15 +93,25 @@ const Column = ({ column, tasks, state, setState }) => {
                     <div className="leftSideBorder"></div>
                     {editHide == index + 1 ? (
                       <div>
-                        <textarea onChange={(e) => setEditText(e.target.value)} type="text" value={editText} placeholder="EDIT" className="editTextarea"></textarea>
+                        <textarea
+                          onChange={(e) => setEditText(e.target.value)}
+                          type="text"
+                          value={editText}
+                          placeholder="EDIT"
+                          className="editTextarea"
+                        ></textarea>
                         <div className="row2">
-                        <button onClick={() => onClickEditSave(task, index)}>EDIT SAVE</button>
-                        <button onClick={onCLickEditClose}>X</button>
+                          <button onClick={() => onClickEditSave(task, index)}>
+                            EDIT SAVE
+                          </button>
+                          <button onClick={onCLickEditClose}>X</button>
                         </div>
                       </div>
                     ) : (
                       <div>
-                        <button onClick={() => onCLickEdit(task, index)}>EDIT</button>
+                        <button onClick={() => onCLickEdit(task, index)}>
+                          EDIT
+                        </button>
                         <button onClick={() => onClickDelete(task, index)}>
                           Delete
                         </button>
@@ -107,16 +123,36 @@ const Column = ({ column, tasks, state, setState }) => {
             );
           })}
           {inputHide == false ? (
-            <button onClick={() => setInputHide(!inputHide)} className="taskAddButton">Добавить карточку</button>
+            <button
+              onClick={() => setInputHide(!inputHide)}
+              className="taskAddButton"
+            >
+              Добавить карточку
+            </button>
           ) : (
             ""
           )}
           {inputHide && (
             <div className="inputType">
-              <textarea ref={buttonRef} value={inputText} onChange={(e) => setInputText(e.target.value)} placeholder="Ввести заголовок для этой карточки"></textarea>
+              <textarea
+                ref={buttonRef}
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                placeholder="Ввести заголовок для этой карточки"
+              ></textarea>
               <div className="row2">
-                <button onClick={onClickAddButton} className="taskAddInputButton">Добавить карточку</button>
-                <button onClick={onClickCloseButton} className="closeInputButton">X</button>
+                <button
+                  onClick={onClickAddButton}
+                  className="taskAddInputButton"
+                >
+                  Добавить карточку
+                </button>
+                <button
+                  onClick={onClickCloseButton}
+                  className="closeInputButton"
+                >
+                  X
+                </button>
               </div>
             </div>
           )}

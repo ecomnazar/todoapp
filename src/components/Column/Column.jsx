@@ -34,7 +34,6 @@ const Column = ({ column, tasks, state, setState }) => {
       tasks.push({id: newItemIndex - 1, content: inputText})
       setNewItemIndex(newItemIndex + 1)
       column.taskIds.push(newItemIndex - 1)
-      console.log(tasks)
       console.log(column.taskIds)
       setInputText('')
       // setState({

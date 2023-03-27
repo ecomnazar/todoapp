@@ -97,7 +97,6 @@ export const initialData = {
         0: { id: 1, content: "Configure Next.js application" },
         1: { id: 2, content: "Configure Next.js and tailwind" },
         2: { id: 3, content: "Create slidebar navigation menu" },
-        3: {},
     },
     columns: {
         "column-1": {

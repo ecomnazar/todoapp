@@ -40,6 +40,10 @@ const Column = ({ column, tasks, state, setState }) => {
           ...state.tasks,
           [newItemIndex]: {id: newItemIndex, content: inputText}
         },
+        column: {
+          ...column,
+          
+        }
       }
       setState(newState)
       console.log(state.tasks);

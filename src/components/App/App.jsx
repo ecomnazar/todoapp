@@ -17,6 +17,8 @@ const reorderColumnList = (sourceCol, startIndex, endIndex) => {
 }
 
 const App = () => {
+    const [newItemIndex, setNewItemIndex] = React.useState(4);
+    
     const [state, setState] = React.useState(initialData)
     const onDragEnd = ( result ) => {
         const { destination, source } = result;
@@ -79,7 +81,7 @@ const App = () => {
             {state.columnOrder.map((columnId) => {
                 const column = state.columns[columnId];
                 const tasks = column.taskIds.map(taskId => state.tasks[taskId])
-                return <Column key={column.id} state={state} setState={setState} column={column} tasks={tasks} />
+                return <Column newItemIndex={newItemIndex} setNewItemIndex={setNewItemIndex} key={column.id} state={state} setState={setState} column={column} tasks={tasks} />
             })}
         </div>
     </div>

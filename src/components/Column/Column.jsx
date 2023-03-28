@@ -3,14 +3,13 @@ import { Draggable, Droppable } from "react-beautiful-dnd";
 import { initialData } from "../App/App";
 import Card from "../Card/Card";
 
-const Column = ({ column, tasks, state, setState }) => {
+const Column = ({ column, tasks, state, setState, newItemIndex, setNewItemIndex }) => {
   var buttonRef = createRef(null);
   const [inputHide, setInputHide] = React.useState(false);
   //IN ASAKY INPUT
   const [inputText, setInputText] = React.useState("");
   const [editHide, setEditHide] = React.useState(0);
   const [editText, setEditText] = React.useState("");
-  const [newItemIndex, setNewItemIndex] = React.useState(4);
 
   //ON CLICK OPEN BUTTON OPENS INPUT WITH FOCUS
   React.useEffect(() => {
@@ -24,8 +23,9 @@ const Column = ({ column, tasks, state, setState }) => {
     setInputHide(!inputHide);
     setInputText("");
   };
-  const onClickAddButton = () => {
+  const onClickAddButton = ({ index }) => {
     if (inputText === "") {
+      console.log(index)
       return;
     } else {
       setInputHide(!inputHide);
@@ -38,24 +38,23 @@ const Column = ({ column, tasks, state, setState }) => {
         ...state,
         tasks: {
           ...state.tasks,
-          [newItemIndex]: {id: newItemIndex, content: inputText}
+          [newItemIndex]: {id: newItemIndex + 1, content: inputText}
         },
-        column: {
-          ...column,
-          
-        }
       }
-      setState(newState)
-      console.log(state.tasks);
-      column.taskIds.push(4)
+      column.taskIds.push(newItemIndex)
       console.log(column.taskIds);
+      console.log(state.tasks);
+      setState(newState)
+      console.log(newItemIndex) 
     }
   };
 
   const onCLickEdit = (id, index) => {
     setEditHide((prev) => !prev);
     setEditHide(index + 1);
-    setEditText(id.content);
+      console.log(column)
+      console.log(column.taskIds.length)
+      setEditText(id.content);
   };
 
   const onCLickEditClose = () => {
@@ -126,13 +125,13 @@ const Column = ({ column, tasks, state, setState }) => {
               </Draggable>
             );
           })}
+          
+          
+          {/* IN ASAKY ADD BUTTON */}
+
+          
           {inputHide == false ? (
-            <button
-              onClick={() => setInputHide(!inputHide)}
-              className="taskAddButton"
-            >
-              Добавить карточку
-            </button>
+            <button onClick={() => setInputHide(!inputHide)}className="taskAddButton">Добавить карточку</button>
           ) : (
             ""
           )}
